@@ -91,7 +91,7 @@ SELECT deptno+deptno+deptno
 FROM dept;
 
 SELECT NAME || '''s ID : '|| id || ',WEIGHT is '|| weight || 'Kg' AS "ID AND WEIGHT"
-FROM STUDENT
+FROM STUDENT;
 
 
 SELECT ENAME||'('|| job ||'), '|| Ename ||''''||job||'''' AS "NAME AND JOB"
@@ -174,5 +174,176 @@ from emp
 WHERE ename LIKE '%MI%';  --MIND MOM MOUSE MOUNTAIN
 --where ename = 'WARD';
 
+select * 
+from emp
+where ename LIKE '%MI%';  --MI~  ~MI    ~MI~
+--where ename LIKE 'MI%';  --MIND  MOM  Mountain  M
+--where ename = 'WARD';
 
+select * 
+from emp
+where ename LIKE '_MI';  -- 3글자 2~3번째가 MI
+where ename LIKE '_MI__';  -- 5글자 2~3번째가 MI
+where ename LIKE '_MI%';  -- n개~글자수 2~3번째가 MI
+
+--< <= > >=
+
+select *
+from emp
+WHERE hiredate < '1981-05-01';
+--WHERE hiredate = '81/05/01';
+
+select *
+from student;
+
+-----------------
+정렬 ORDER BY
+*정렬을 사용하지 않으면 순서보장X
+ORDER BY 정렬할 기준이되는 컬럼명 [ASC|DESC] [오름차순|내림차순]
+
+SELECT ...
+FROM ...
+WHERE ...
+ORDER BY ...
+
+SELECT ...
+FROM ...
+ORDER BY ...
+;
+
+select * 
+from student
+ORDER BY name; --name 기준 오름차순 정렬
+
+select * 
+from student
+ORDER BY name DESC; --name 기준 내림차순 정렬
+
+
+
+select * 
+from student
+ORDER BY grade DESC; --학년기준 내림차순
+
+select *
+from student
+ORDER BY birthday;  --생일 기준 오름차순
+
+
+select *
+from student
+ORDER BY birthday DESC;  --생일 기준 내림차순 (큰 수 -> 작은 수 방향)
+                 --날짜에서 큰 수는? 더 최근/미래   작은수? 더 과거
+                 
+SELECT *
+FROM student
+WHERE grade IN (1,2,3)  --학년 1,2,3 년만 조회
+ORDER BY grade, height DESC;  --학년 오름차순 정렬, 키는 내림차순 정렬
+
+
+
+----------
+집합연산자
+UNION  합집합 (중복제거)
+UNION ALL 합집합 (중복제거X)
+INTERSECT  교집합
+MINUS   차집합
+
+    조건(제약)
+        1. 컬럼 갯수 동일
+        2. 컬럼 데이터형 동일
+        3. 컬럼명은 상관없음
+
+--학생들 중에 101번학과 학생들과 102번 학과 학생들 조회
+select *
+from student
+WHERE deptno1 IN (101, 102);
+
+select *
+from student
+WHERE deptno1 = 101
+UNION ALL
+select *
+from student
+WHERE deptno1 = 102;
+
+-- 각 테이블 조회 결과 갯수/타입이 일치하는 형태로 만들어서 결합
+select studno, name, deptno1  --숫자 / 문자 / 숫자   3개
+from student
+WHERE deptno1 = 101
+UNION ALL
+select profno, name, deptno  --숫자 / 문자 / 숫자   3개
+from professor
+WHERE deptno = 101;
+
+select studno, name, deptno1  --숫자 / 문자 / 숫자   3개
+from student
+WHERE deptno1 = 101
+UNION ALL
+select profno, name, 0  --숫자 / 문자 / 숫자(인위적으로 숫자형태 갯수 맞추기)   3개
+from professor
+WHERE deptno = 101;
+
+
+select 
+    studno idno, 
+    name, 
+    deptno1 "deptno", 
+    null AS "email"  --숫자 / 문자 / 숫자   3개
+from student
+WHERE deptno1 = 101
+UNION ALL
+select 
+    profno, 
+    name, 
+    deptno, 
+    email  --숫자 문자 숫자 문자 4개
+from professor
+WHERE deptno = 101;
+
+select studno, name, deptno1, 1 divtype  --숫자 / 문자 / 숫자   3개
+from student
+WHERE deptno1 = 101
+UNION ALL
+select profno, name, deptno, 2 --숫자 / 문자 / 숫자   3개
+from professor
+WHERE deptno = 101;
+
+select studno, name, deptno1, 'STD' divtype  --숫자 / 문자 / 숫자   3개
+from student
+WHERE deptno1 = 101
+UNION ALL
+select profno, name, deptno, 'PRF' --숫자 / 문자 / 숫자   3개
+from professor
+WHERE deptno = 101;
+
+select studno, name, deptno1, '학생' divtype  --숫자 / 문자 / 숫자   3개
+from student
+WHERE deptno1 = 101
+UNION ALL
+select profno, name, deptno, '교수' --숫자 / 문자 / 숫자   3개
+from professor
+WHERE deptno = 101;
+
+
+select *
+from student
+where deptno1 = 101
+INTERSECT
+select *
+from student
+where deptno2 = 201;
+
+select *
+from student
+where deptno1 = 101 AND deptno2 = 201;
+
+
+select *
+from emp
+WHERE job = 'SALESMAN' AND comm > 400
+MINUS  --차집합
+select *
+from emp  --그동안 포상을 받은 직원 목록   emp_cele
+WHERE hiredate < '1982-01-01';
 
