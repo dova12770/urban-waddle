@@ -143,3 +143,19 @@ where s.profno(+) = p.profno;
 
 select *
 from student;
+
+select *
+from student s, professor p
+where s.profno = p.profno(+)
+union
+select *
+from student s, professor p
+where s.profno(+) = p.profno;
+
+select e1.empno,e1.ename,e1.mgr,e2.ename
+from emp e1, emp e2
+where e1.mgr= e2.empno
+order by e1.empno;
+
+select *
+from emp;
