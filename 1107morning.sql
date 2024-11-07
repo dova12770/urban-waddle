@@ -30,3 +30,18 @@ SELECT
 FROM panmae
 GROUP BY p_date
 ORDER BY p_date;
+
+
+SELECT 
+    p_date 판매일자,
+    p_code 상품코드,
+    sum(p_qty) 판매수량,
+    sum(p_total) 판매금액
+FROM panmae
+GROUP BY ROLLUP(p_date, p_code); 
+
+
+
+
+
+
