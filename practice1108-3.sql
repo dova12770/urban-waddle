@@ -1,25 +1,30 @@
 
-SELECT s.max_height 
+SELECT 
+    d.dname,
+    s.max_height,
+    s1.name,
+    s1.height
 FROM (select deptno1,max(height) max_height
                     from student
-                    group by deptno1) s, student s1
+                    group by deptno1) s, student s1, department d
 where 
+    s.deptno1=s1.deptno1
+    and
+    s.max_height=s1.height
+    and
+    s1.deptno1=d.deptno
     ;
 
-select name, height
-from student s
-where
-    s.height > ( select avg(t.height)
-                from student t
-                where s.grade=t.grade);
-
-select grade, avg(height)
-from student
-group by grade;
-
-
-
-
+select s1.grade,s1.name,s1.height,s.avg_height
+from(select grade, avg(height) avg_height
+    from student
+    group by grade) s,student s1
+where 
+    s1.grade=s.grade
+    and
+    s1.height>s.avg_height
+    order by grade
+;
 
 
 
