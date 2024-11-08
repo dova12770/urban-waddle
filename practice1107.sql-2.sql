@@ -33,4 +33,14 @@ where
                 FROM student 
                 where deptno1=201);
 
-SELECT AVG(weight) FROM student where deptno1=201 ;
+select empno, name, deptno
+from emp2 
+where deptno in (select dcode
+                from dept2
+                where area ='Pohang Main Office');
+                
+select *
+from emp2;
+
+select *
+from dept2;
