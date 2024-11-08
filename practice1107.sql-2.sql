@@ -4,8 +4,8 @@ from student s, department d
 where s.deptno1 =d.deptno
     and
     s.deptno1 =(select deptno1
-from student
-where name = 'Anthony Hopkins');
+                from student
+                where name = 'Anthony Hopkins');
     
 select deptno1
 from student
@@ -38,7 +38,11 @@ from emp2
 where deptno in (select dcode
                 from dept2
                 where area ='Pohang Main Office');
-                
+            
+            
+select dcode
+                from dept2
+                where area ='Pohang Main Office';    
 select *
 from emp2;
 
