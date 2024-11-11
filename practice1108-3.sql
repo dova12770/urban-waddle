@@ -87,3 +87,4 @@ where s.height > (select AVG(t.height)              --내 학년 평균 키
                     where t.grade =s.grade
                     )
 ;
+
