@@ -34,3 +34,5 @@ SELECT *
 --DELETE  
 FROM T_MENU_12
 WHERE menu_id = 5;
+
+commit;
