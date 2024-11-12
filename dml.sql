@@ -31,6 +31,22 @@ VALUES(6,'이름6');
 INSERT INTO new_table
 VALUES(7,'이름7', null);
 
+--여러개를 동시에 삽입(저장) INSERT ALL
+
+INSERT ALL
+INTO tt02 VALUES (7,'이름7', NULL)
+INTO tt02 VALUES (8,'이름8', NULL)
+INTO tt02 VALUES (9,'이름9', NULL)
+INTO tt02 VALUES (10,'이름10', NULL)
+SELECT * FROM DUAL;
+
+SELECT * FROM TT02;
+
+INSERT INTO TT02        --NUMBER3 VARCHAR2 DATE
+SELECT 11,'샘플', SYSDATE FROM DUAL;
+
+INSERT INTO TT02   
+SELECT DEPTNO, LOC, SYSDATE FROM DEPT;
 --------------------------
 
 INSERT INTO tt02 (no)
@@ -110,3 +126,9 @@ FROM dept4
 WHERE temp_code ='Y';
 
 select * from dept2;
+
+--2개의 테이블을 하나로 합쳐 새로운 테이블을 만든다.
+
+
+
+
