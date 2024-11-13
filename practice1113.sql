@@ -21,3 +21,5 @@ select t_item_list_pk_seq.currval from dual;
 INSERT INTO  T_ITEM_LIST VALUES (t_item_list_pk_seq.nextval,'가가가',1000,sysdate);
 
 SELECT * FROM T_ITEM_LIST;
+
+--insert all에 시퀀스 여러개 사용 x
