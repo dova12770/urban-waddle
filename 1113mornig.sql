@@ -1,0 +1,87 @@
+--mornig
+
+CREATE TABLE TABLE_DATA_1
+(
+no number(10),
+create_date DATE
+);
+
+CREATE TABLE TABLE_DATA_2
+(
+no number(10),
+create_date DATE
+);
+
+CREATE TABLE TABLE_COLC
+(
+std_date DATE,
+CHECK_DATA1 VARCHAR2(6),
+CHECK_DATA2 VARCHAR2(6)
+);
+
+INSERT INTO TABLE_DATA_1 VALUES (1, '2023-04-01');
+INSERT INTO TABLE_DATA_1 VALUES (2, '2023-04-02');
+INSERT INTO TABLE_DATA_1 VALUES (3, '2023-04-03');
+INSERT INTO TABLE_DATA_1 VALUES (4, '2023-04-04');
+
+INSERT INTO TABLE_DATA_2 VALUES (1, '2023-04-02');
+INSERT INTO TABLE_DATA_2 VALUES (2, '2023-04-03');
+INSERT INTO TABLE_DATA_2 VALUES (3, '2023-04-04');
+INSERT INTO TABLE_DATA_2 VALUES (4, '2023-04-05');
+
+select * from TABLE_DATA_1;
+
+select * from TABLE_DATA_2;
+
+select * from TABLE_COLC ORDER BY STD_DATE;
+
+MERGE INTO TABLE_COLC c
+USING TABLE_DATA_1 t
+ON (c.std_date = t.create_date)
+WHEN MATCHED THEN   
+    UPDATE SET  c.check_data1 = 'Y'
+WHEN NOT MATCHED THEN   
+    INSERT VALUES (t.create_date,'Y','N');
+    
+MERGE INTO TABLE_COLC c
+USING TABLE_DATA_2 t
+ON (c.std_date = t.create_date)
+WHEN MATCHED THEN   
+    UPDATE SET c.check_data2 = 'Y'  
+WHEN NOT MATCHED THEN   
+    INSERT VALUES (t.create_date,'N','Y');
+    
+---------------------------------------------------------------------------------    
+
+MERGE INTO TABLE_COLC c
+USING TABLE_DATA_1 d
+ON (C.STD_DATE = D.CREATE_DATE)
+WHEN MATCHED THEN   --일치하면 업데이트
+    UPDATE SET CHECK_DATA1 ='Y' 
+WHEN NOT MATCHED THEN   --일치하는게 없으면 추가
+    INSERT VALUES (D.CREATE_DATE,'Y','N');
+
+MERGE INTO TABLE_COLC c
+USING TABLE_DATA_2 d
+ON (C.STD_DATE = D.CREATE_DATE)
+WHEN MATCHED THEN   --일치하면 업데이트
+    UPDATE SET CHECK_DATA2 ='Y' 
+WHEN NOT MATCHED THEN   --일치하는게 없으면 추가
+    INSERT VALUES (D.CREATE_DATE,'N','Y');
+
+DROP TABLE TABLE_COLC;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
